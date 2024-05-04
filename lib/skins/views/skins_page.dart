@@ -52,12 +52,14 @@ class _SkinCard extends StatelessWidget {
 
   const _SkinCard({required this.skinModel});
 
-  final testStyle = const TextStyle(color: Colors.white);
+  final textStyle = const TextStyle(color: Colors.white);
+  final redTextStyle = const TextStyle(color: Colors.red);
 
   @override
   Widget build(BuildContext context) {
     final selectedSkin = context.read<SelectedSkinCubit>().state;
     final isSelected = skinModel.name == selectedSkin.name;
+    final canBuy = context.read<ClickerCubit>().state.clicks >= skinModel.price;
 
     return Column(
       children: [
@@ -79,13 +81,15 @@ class _SkinCard extends StatelessWidget {
                   child: Builder(
                     builder: (context) {
                       if (isSelected) {
-                        return label('Selected');
+                        return label(text: 'Selected');
                       }
 
                       if (!skinModel.isBought) {
-                        return label('Buy for ${skinModel.price}');
+                      return label(
+                        text: 'Buy for ${skinModel.price}',
+                        customTextStyle: canBuy ? textStyle : redTextStyle,
+                      );
                       }
-
                       return const SizedBox();
                     }
                   ),
@@ -95,18 +99,18 @@ class _SkinCard extends StatelessWidget {
                   width: double.infinity,
                   height: double.infinity,
                   onTap: () {
-                    if (!skinModel.isBought) {
+                    if (skinModel.isBought) {
+                      select(context, skinModel);
+                    } else {
                       tryToBuy(context, skinModel);
                     }
-
-                    select(context, skinModel);
                   },
                 )
               ],
             ),
           ),
         ),
-        Text(skinModel.name, style: testStyle),
+        Text(skinModel.name, style: textStyle),
       ],
     );
   }
@@ -131,13 +135,16 @@ class _SkinCard extends StatelessWidget {
     skinsCubit.unlock(skinModel.name);
   }
 
-  Padding label(String text) {
+  Padding label({required String text, TextStyle? customTextStyle}) {
     return Padding(
       padding: const EdgeInsets.only(top: 80),
       child: Container(
         color: Colors.black.withOpacity(0.7),
         width: double.infinity,
-        child: Text(text, textAlign: TextAlign.center, style: testStyle),
+        child: Text(text,
+          textAlign: TextAlign.center,
+          style: customTextStyle ?? textStyle,
+        ),
       ),
     );
   }

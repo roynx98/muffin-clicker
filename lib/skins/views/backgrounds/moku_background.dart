@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BackgroundPainter extends CustomPainter {
+class MokuBackground extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint oddPaint = Paint()..color = const Color(0xFF86C6FA);
-    final Paint evenPaint = Paint()..color = const Color(0xFF76B8F9);
+    final Paint oddPaint = Paint()..color = Color(0xFFA22835);
+    final Paint evenPaint = Paint()..color = Color(0xFFC04356);
 
     const numbersOfRects = 8.0;
     final rectSize = size.width / numbersOfRects;
@@ -21,5 +21,5 @@ class BackgroundPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(BackgroundPainter oldDelegate) => false;
+  bool shouldRepaint(MokuBackground oldDelegate) => false;
 }

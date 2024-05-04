@@ -1,4 +1,5 @@
-import 'package:muffin_clicker/skins/views/backgrounds/angry_background.dart';
+import 'package:muffin_clicker/skins/views/backgrounds/chocolate_background.dart';
+import 'package:muffin_clicker/skins/views/backgrounds/moku_background.dart';
 import 'package:muffin_clicker/skins/views/backgrounds/zombie_background.dart';
 
 class SkinModel {
@@ -47,29 +48,38 @@ class SkinModel {
   }
 }
 
-const angryBackgroundId = 'angryBackgroundId';
+const chocolateBackgroundId = 'chocolateBackgroundId';
 const zombieBackgroundId = 'zombieBackgroundId';
+const mokuBackgroundId = 'mokuBackgroundId';
 
 const skins = [
   SkinModel(
     name: 'Chocolate',
-    image: 'assets/img/chocolateMuffin.png',
-    backgroundId: angryBackgroundId,
+    image: 'assets/img/chocolate.png',
+    backgroundId: chocolateBackgroundId,
     isBought: true,
     price: 0,
   ),
   SkinModel(
     name: 'Zombie',
-    image: 'assets/img/zombieMuffin.png',
+    image: 'assets/img/zombie.png',
     backgroundId: zombieBackgroundId,
     isBought: false,
     price: 1,
+  ),
+   SkinModel(
+    name: 'Moku',
+    image: 'assets/img/moku.png',
+    backgroundId: mokuBackgroundId,
+    isBought: false,
+    price: 10,
   )
 ];
 
 final defaultSkin = skins[0];
 
 final mapBackgorundIdToPainter = {
-  angryBackgroundId: AngryBackground(),
+  chocolateBackgroundId: ChocolateBackground(),
   zombieBackgroundId: ZombieBackground(),
+  mokuBackgroundId: MokuBackground(),
 };

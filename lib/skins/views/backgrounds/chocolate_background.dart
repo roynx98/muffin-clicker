@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AngryBackground extends CustomPainter {
+class ChocolateBackground extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint oddPaint = Paint()..color = const Color(0xFF86C6FA);
@@ -21,5 +21,5 @@ class AngryBackground extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(AngryBackground oldDelegate) => false;
+  bool shouldRepaint(ChocolateBackground oldDelegate) => false;
 }
