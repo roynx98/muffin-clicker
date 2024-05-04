@@ -16,6 +16,16 @@ class SkinModel {
     required this.price,
   });
 
+  SkinModel copyWith({ bool? isBought, }) {
+    return SkinModel(
+      name: name,
+      image: image,
+      backgroundId: backgroundId,
+      isBought: isBought ?? this.isBought,
+      price: price,
+    );
+  }
+
   factory SkinModel.fromJson(Map<String, dynamic> json) {
     return SkinModel(
       name: json['name'],

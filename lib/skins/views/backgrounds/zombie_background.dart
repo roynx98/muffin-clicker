@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class ZombieBackground extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint oddPaint = Paint()..color = Color.fromARGB(255, 172, 31, 219);
-    final Paint evenPaint = Paint()..color = Color.fromARGB(255, 55, 25, 59);
+    final Paint oddPaint = Paint()..color = const Color(0xFF5D328C);
+    final Paint evenPaint = Paint()..color = const Color(0xFF7741B5);
 
     const numbersOfRects = 8.0;
     final rectSize = size.width / numbersOfRects;

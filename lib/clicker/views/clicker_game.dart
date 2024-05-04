@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/clicker/views/clicker.dart';
 import 'package:muffin_clicker/clicker/views/particles_painter.dart';
-import 'package:muffin_clicker/skins/views/backgrounds/background_painter.dart';
+import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
+import 'package:muffin_clicker/skins/cubit/skin_model.dart';
 
 class ClickerGame extends StatefulWidget {
   const ClickerGame({super.key});
@@ -21,11 +22,11 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
   List<ScoreParticle> scoreParticles = [];
   late final Ticker _ticker;
   ui.Image? imageParticle;
+  String lastImagePath = '';
 
   @override
   void initState() {
     super.initState();
-    loadImageParticle();
     var lastTick = const Duration();
     var timer = 0.0;
 
@@ -33,10 +34,16 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
       final delta = (elapsed - lastTick).inMilliseconds / 1000.0;
 
       timer += delta;
-
       if (timer >= 1) {
         context.read<ClickerCubit>().applyClicksPerSecond();
         timer = 0;
+      }
+
+      final selectedImageParticle =
+          context.read<SelectedSkinCubit>().state.image;
+      if (lastImagePath != selectedImageParticle) {
+        lastImagePath = selectedImageParticle;
+        changeImageParticle(lastImagePath);
       }
 
       for (var particle in clickerParticles) {
@@ -56,8 +63,8 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
     _ticker.start();
   }
 
-  Future<void> loadImageParticle() async {
-    final data = await rootBundle.load('assets/img/chocolateMuffin.png');
+  Future<void> changeImageParticle(String image) async {
+    final data = await rootBundle.load(image);
     final ui.Codec codec = await ui.instantiateImageCodec(
         data.buffer.asUint8List(),
         targetWidth: 50,
@@ -77,11 +84,13 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    SkinModel selectedSkin = context.read<SelectedSkinCubit>().state;
+
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: CustomPaint(
-        painter: BackgroundPainter(),
+        painter: mapBackgorundIdToPainter[selectedSkin.backgroundId],
         foregroundPainter: ParticlesPainter(
           clickerParticles: clickerParticles,
           scoreParticles: scoreParticles,

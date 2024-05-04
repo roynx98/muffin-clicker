@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/clicker/views/clicker_game.dart';
-import 'package:muffin_clicker/shared_widgets/ad_loader.dart';
+import 'package:muffin_clicker/shared_widgets/multiplier_button.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
 import 'package:muffin_clicker/shared_widgets/status_bar.dart';
 import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
@@ -27,9 +27,7 @@ class ClickerPage extends StatelessWidget {
             Column(
               children: [
                 StatusBar(
-                  onPressSettings: () {
-
-                  },
+                  onPressSettings: () {},
                 ),
                 const _Actions(),
               ],
@@ -92,12 +90,13 @@ class _Actions extends StatelessWidget {
             ),
           ),
           const SizedBox(width: gap),
-          const AdLoader(),
+          const MultiplierButton(),
         ],
       ),
     );
   }
 }
+
 
 class ProvideMyBlocs extends StatelessWidget {
   final Widget child;
@@ -111,16 +110,15 @@ class ProvideMyBlocs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return BlocProvider.value(
+    return BlocProvider.value(
       value: blocContext.read<SelectedSkinCubit>(),
-       child: BlocProvider.value(
-         value: blocContext.read<ClickerCubit>(),
-         child: BlocProvider.value(
+      child: BlocProvider.value(
+        value: blocContext.read<ClickerCubit>(),
+        child: BlocProvider.value(
           value: blocContext.read<SkinsCubit>(),
           child: child,
-             ),
-       ),
-     );
+        ),
+      ),
+    );
   }
-
 }

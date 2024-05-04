@@ -1,19 +1,19 @@
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
+import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
 
-class AdLoader extends StatefulWidget {
-  const AdLoader({super.key});
+class MultiplierButton extends StatefulWidget {
+  const MultiplierButton({super.key});
 
   @override
-  State<AdLoader> createState() => _AdLoaderState();
+  State<MultiplierButton> createState() => _MultiplierButtonState();
 }
 
-class _AdLoaderState extends State<AdLoader> {
+class _MultiplierButtonState extends State<MultiplierButton> {
   InterstitialAd? _interstitialAd;
   final adUnitId = Platform.isAndroid
     ? 'ca-app-pub-3940256099942544/1033173712'
@@ -21,6 +21,7 @@ class _AdLoaderState extends State<AdLoader> {
 
   @override
   void initState() {
+    super.initState();
     loadAd();
   }
 
@@ -66,14 +67,20 @@ class _AdLoaderState extends State<AdLoader> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Image.asset(
-            'assets/img/chocolateMuffin.png',
-            height: 35,
+          Builder(
+            builder: (context) {
+              final selectedSkin = context.watch<SelectedSkinCubit>().state;
+
+              return Image.asset(
+                selectedSkin.image,
+                height: 35,
+              );
+            }
           ),
-          Positioned(
+          const Positioned(
             bottom: 0,
             right: 5,
-            child: Text("2x", style: buttonTextStyle),
+            child: Text('2x', style: buttonTextStyle),
           ),
         ],
       ),

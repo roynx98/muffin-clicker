@@ -5,6 +5,10 @@ import 'package:muffin_clicker/skins/cubit/skin_model.dart';
 class SelectedSkinCubit extends HydratedCubit<SkinModel> {
   SelectedSkinCubit() : super(defaultSkin);
 
+  setSelected(SkinModel model) {
+    emit(model);
+  }
+
   @override
   SkinModel fromJson(Map<String, dynamic> json) {
     return SkinModel.fromJson(json);
