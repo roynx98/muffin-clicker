@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
 
 class Clicker extends StatefulWidget {
   final Function(Offset) onCick;
@@ -53,7 +55,7 @@ class _ClickerState extends State<Clicker> with TickerProviderStateMixin {
             child: RotationTransition(
               turns: _animation,
               child: Image.asset(
-                'assets/img/muffin.png',
+                context.read<SelectedSkinCubit>().state.image,
                 width: 200,
               ),
             ),

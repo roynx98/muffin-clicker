@@ -5,9 +5,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
-import 'package:muffin_clicker/clicker/views/background_painter.dart';
 import 'package:muffin_clicker/clicker/views/clicker.dart';
 import 'package:muffin_clicker/clicker/views/particles_painter.dart';
+import 'package:muffin_clicker/skins/views/backgrounds/background_painter.dart';
 
 class ClickerGame extends StatefulWidget {
   const ClickerGame({super.key});
@@ -57,7 +57,7 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
   }
 
   Future<void> loadImageParticle() async {
-    final data = await rootBundle.load('assets/img/muffin.png');
+    final data = await rootBundle.load('assets/img/chocolateMuffin.png');
     final ui.Codec codec = await ui.instantiateImageCodec(
         data.buffer.asUint8List(),
         targetWidth: 50,

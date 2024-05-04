@@ -1,16 +1,15 @@
 class ClickerModel {
-  int clicks;
-  int clicksIncrement;
-  int clicksPerSecond;
+  final int clicks;
+  final int clicksIncrement;
+  final int clicksPerSecond;
 
-  ClickerModel({
+  const ClickerModel({
     this.clicks = 0,
     this.clicksIncrement = 1,
     this.clicksPerSecond = 0,
   });
 
   ClickerModel copyWith({ int? clicks, }) {
-
     return ClickerModel(
       clicks: clicks ?? this.clicks,
       clicksIncrement: clicksIncrement,

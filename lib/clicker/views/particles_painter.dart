@@ -18,7 +18,7 @@ class ParticlesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = size / 2;
-    final paint = Paint()..color = Colors.white.withOpacity(1);
+    final paint = Paint()..color = Colors.white.withOpacity(0.6);
 
     for (var particle in clickerParticles) {
       canvas.save();
@@ -27,10 +27,11 @@ class ParticlesPainter extends CustomPainter {
       canvas.translate(-particle.pos.dx, -particle.pos.dy);
       if (image != null) {
         canvas.drawImage(
-            image!,
-            Offset(particle.pos.dx - image!.width / 2,
-                particle.pos.dy - image!.height / 2),
-            paint);
+          image!,
+          Offset(particle.pos.dx - image!.width / 2,
+              particle.pos.dy - image!.height / 2),
+          paint,
+        );
       }
       canvas.restore();
     }

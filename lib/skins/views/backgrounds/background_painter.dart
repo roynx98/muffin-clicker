@@ -13,7 +13,7 @@ class BackgroundPainter extends CustomPainter {
       canvas.drawRect(
         Rect.fromPoints(
           Offset(i * rectSize, 0),
-          Offset(i * rectSize + size.width, size.height),
+          Offset(i * rectSize + rectSize, size.height),
         ),
         i % 2 == 0 ? oddPaint : evenPaint,
       );
