@@ -65,7 +65,7 @@ const skins = [
     image: 'assets/img/zombie.png',
     backgroundId: zombieBackgroundId,
     isBought: false,
-    price: 1,
+    price: 100,
   ),
    SkinModel(
     name: 'Moku',

@@ -9,11 +9,15 @@ class ClickerModel {
     this.clicksPerSecond = 0,
   });
 
-  ClickerModel copyWith({ int? clicks, }) {
+  ClickerModel copyWith({
+    int? clicks,
+    int? clicksIncrement,
+    int? clicksPerSecond,
+  }) {
     return ClickerModel(
       clicks: clicks ?? this.clicks,
-      clicksIncrement: clicksIncrement,
-      clicksPerSecond: clicksPerSecond,
+      clicksIncrement: clicksIncrement ?? this.clicksIncrement,
+      clicksPerSecond: clicksPerSecond ?? this.clicksPerSecond,
     );
   }
 
@@ -24,9 +28,9 @@ class ClickerModel {
       clicksPerSecond: json['clicksPerSecond'],
     );
   }
-  
+
   Map<String, dynamic> toJson() {
-     return {
+    return {
       'clicks': clicks,
       'clicksIncrement': clicksIncrement,
       'clicksPerSecond': clicksPerSecond,

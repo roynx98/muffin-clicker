@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class ClickerGame extends StatefulWidget {
   State<ClickerGame> createState() => _ClickerGameState();
 }
 
-class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStateMixin {
+class _ClickerGameState extends State<ClickerGame>
+    with SingleTickerProviderStateMixin {
   List<ClickerParticle> clickerParticles = [];
   List<ScoreParticle> scoreParticles = [];
   late final Ticker _ticker;
@@ -28,16 +30,13 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
   void initState() {
     super.initState();
     var lastTick = const Duration();
-    var timer = 0.0;
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      context.read<ClickerCubit>().applyClicksPerSecond();
+    });
 
     _ticker = createTicker((elapsed) {
       final delta = (elapsed - lastTick).inMilliseconds / 1000.0;
-
-      timer += delta;
-      if (timer >= 1) {
-        context.read<ClickerCubit>().applyClicksPerSecond();
-        timer = 0;
-      }
 
       final selectedImageParticle =
           context.read<SelectedSkinCubit>().state.image;
@@ -95,7 +94,7 @@ class _ClickerGameState extends State<ClickerGame> with SingleTickerProviderStat
           clickerParticles: clickerParticles,
           scoreParticles: scoreParticles,
           image: imageParticle,
-          clickIncrement: context.read<ClickerCubit>().state.clicksIncrement
+          clickIncrement: context.read<ClickerCubit>().state.clicksIncrement,
         ),
         child: Clicker(
           onCick: (Offset origin) {

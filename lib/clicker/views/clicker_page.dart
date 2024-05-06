@@ -8,6 +8,7 @@ import 'package:muffin_clicker/shared_widgets/status_bar.dart';
 import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
 import 'package:muffin_clicker/skins/cubit/skins_cubit.dart';
 import 'package:muffin_clicker/skins/views/skins_page.dart';
+import 'package:muffin_clicker/upgrades/view/upgrades_bar.dart';
 
 class ClickerPage extends StatelessWidget {
   const ClickerPage({super.key});
@@ -30,6 +31,8 @@ class ClickerPage extends StatelessWidget {
                   onPressSettings: () {},
                 ),
                 const _Actions(),
+                const Spacer(),
+                const SafeArea(child: UpgradesBar()),
               ],
             ),
           ],
@@ -66,9 +69,16 @@ class _Actions extends StatelessWidget {
           InkWellContainer(
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (a) {
-                  return ProvideMyBlocs(
-                    blocContext: context,
+                MaterialPageRoute(builder: (_) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                          value: context.read<SelectedSkinCubit>()),
+                      BlocProvider.value(
+                          value: context.read<ClickerCubit>()),
+                      BlocProvider.value(
+                          value: context.read<SkinsCubit>()),
+                    ],
                     child: const SkinsPage(),
                   );
                 }),
@@ -92,32 +102,6 @@ class _Actions extends StatelessWidget {
           const SizedBox(width: gap),
           const MultiplierButton(),
         ],
-      ),
-    );
-  }
-}
-
-
-class ProvideMyBlocs extends StatelessWidget {
-  final Widget child;
-  final BuildContext blocContext;
-
-  const ProvideMyBlocs({
-    super.key,
-    required this.child,
-    required this.blocContext,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: blocContext.read<SelectedSkinCubit>(),
-      child: BlocProvider.value(
-        value: blocContext.read<ClickerCubit>(),
-        child: BlocProvider.value(
-          value: blocContext.read<SkinsCubit>(),
-          child: child,
-        ),
       ),
     );
   }
