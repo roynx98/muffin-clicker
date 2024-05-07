@@ -61,23 +61,43 @@ class UpgradeModel {
 
 const initialUpgrades = [
   UpgradeModel(
-    name: 'Muffin clicker',
+    name: 'Muffin Clicker',
     description: "Makes your clicks 2 times as powerful",
     level: 1,
     price: 20,
     priceMultiplier: 10,
-    iconName: "assets/img/chocolate.png",
+    iconName: "assets/img/clicker.png",
     clicksIncrementMultiplier: 2,
     clicksPerSecondIncrement: 0
   ),
   UpgradeModel(
-    name: 'Auto muffin',
+    name: 'Muffin Stand',
     description: "Produces 1 muffin per second",
     level: 1,
     price: 100,
-    priceMultiplier: 1.15,
-    iconName: "assets/img/chocolate.png",
+    priceMultiplier: 3,
+    iconName: "assets/img/stand.png",
     clicksIncrementMultiplier: 1,
-    clicksPerSecondIncrement: 1
+    clicksPerSecondIncrement: 1,
+  ),
+  UpgradeModel(
+    name: 'Muffin Bakery',
+    description: "Produces 10 muffin per second",
+    level: 1,
+    price: 1000,
+    priceMultiplier: 3,
+    iconName: "assets/img/bakery.png",
+    clicksIncrementMultiplier: 1,
+    clicksPerSecondIncrement: 10,
+  ),
+  UpgradeModel(
+    name: 'Muffin Factory',
+    description: "Produces 100 muffin per second",
+    level: 1,
+    price: 10000,
+    priceMultiplier: 3,
+    iconName: "assets/img/factory.png",
+    clicksIncrementMultiplier: 1,
+    clicksPerSecondIncrement: 100,
   ),
 ];

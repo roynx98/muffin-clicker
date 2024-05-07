@@ -71,6 +71,10 @@ flutter:
     - assets/img/zombie.png
     - assets/img/moku.png
     - assets/img/light.png
+    - assets/img/clicker.png
+    - assets/img/stand.png
+    - assets/img/bakery.png
+    - assets/img/factory.png
     - assets/sound/pop.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
