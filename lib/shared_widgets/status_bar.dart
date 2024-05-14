@@ -60,11 +60,11 @@ class StatusBar extends StatelessWidget {
                     builder: (context, state) {
                       return Column(
                         children: [
-                          Text("${state.clicks} muffins", style: titleStyle),
+                          Text('${state.clicks} muffins', style: titleStyle),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: Text(
-                                "${state.clicksPerSecond} muffins per second",
+                                '${state.clicksPerSecond * state.multiplier} muffins per second',
                                 style: subtitleStyle),
                           ),
                         ],

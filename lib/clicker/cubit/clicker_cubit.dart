@@ -7,19 +7,25 @@ class ClickerCubit extends HydratedCubit<ClickerModel> {
 
   void incrementClicks() {
     emit(state.copyWith(
-      clicks: state.clicks + state.clicksIncrement,
+      clicks: state.clicks + state.clicksIncrement * state.multiplier,
     ));
   }
 
   void applyClicksPerSecond() {
     emit(state.copyWith(
-      clicks: state.clicks + state.clicksPerSecond,
+      clicks: state.clicks + state.clicksPerSecond * state.multiplier,
     ));
   }
 
   void spend(int price) {
     emit(state.copyWith(
       clicks: state.clicks - price,
+    ));
+  }
+
+  void setMultiplier(int multiplier) {
+    emit(state.copyWith(
+      multiplier: multiplier,
     ));
   }
 

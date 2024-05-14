@@ -17,7 +17,6 @@ class ParticlesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = size / 2;
     final paint = Paint()..color = Colors.white.withOpacity(0.6);
 
     for (var particle in clickerParticles) {
@@ -55,7 +54,7 @@ class ParticlesPainter extends CustomPainter {
         ))
         ..addText('+$clickIncrement');
 
-      final constraints = ui.ParagraphConstraints(width: 300.0);
+      const constraints = ui.ParagraphConstraints(width: 300.0);
       final paragraph = paragraphBuilder.build();
       paragraph.layout(constraints);
 

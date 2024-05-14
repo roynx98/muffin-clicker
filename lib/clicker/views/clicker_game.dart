@@ -83,7 +83,10 @@ class _ClickerGameState extends State<ClickerGame>
 
   @override
   Widget build(BuildContext context) {
-    SkinModel selectedSkin = context.read<SelectedSkinCubit>().state;
+    final selectedSkin = context.read<SelectedSkinCubit>().state;
+    final clickerCubit = context.read<ClickerCubit>();
+    final clickIncrement =
+        clickerCubit.state.multiplier * clickerCubit.state.clicksIncrement;
 
     return SizedBox(
       width: double.infinity,
@@ -94,13 +97,13 @@ class _ClickerGameState extends State<ClickerGame>
           clickerParticles: clickerParticles,
           scoreParticles: scoreParticles,
           image: imageParticle,
-          clickIncrement: context.read<ClickerCubit>().state.clicksIncrement,
+          clickIncrement: clickIncrement,
         ),
         child: Clicker(
           onCick: (Offset origin) {
             clickerParticles.add(ClickerParticle(origin));
             scoreParticles.add(ScoreParticle(origin));
-            context.read<ClickerCubit>().incrementClicks();
+            clickerCubit.incrementClicks();
             playSound();
           },
         ),

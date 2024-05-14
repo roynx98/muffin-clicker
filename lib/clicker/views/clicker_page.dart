@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/clicker/views/clicker_game.dart';
-import 'package:muffin_clicker/shared_widgets/multiplier_button.dart';
+import 'package:muffin_clicker/mutiplier/cubit/multiplier_cubit.dart';
+import 'package:muffin_clicker/mutiplier/views/multiplier_button.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
 import 'package:muffin_clicker/shared_widgets/status_bar.dart';
 import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
@@ -21,6 +22,7 @@ class ClickerPage extends StatelessWidget {
           BlocProvider(create: (context) => ClickerCubit()),
           BlocProvider(create: (context) => SelectedSkinCubit()),
           BlocProvider(create: (context) => SkinsCubit()),
+          BlocProvider(create: (context) => MultiplierCubit()),
         ],
         child: Stack(
           children: [
@@ -73,11 +75,17 @@ class _Actions extends StatelessWidget {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider.value(
-                          value: context.read<SelectedSkinCubit>()),
+                        value: context.read<SelectedSkinCubit>(),
+                      ),
                       BlocProvider.value(
-                          value: context.read<ClickerCubit>()),
+                        value: context.read<ClickerCubit>(),
+                      ),
                       BlocProvider.value(
-                          value: context.read<SkinsCubit>()),
+                        value: context.read<SkinsCubit>(),
+                      ),
+                      BlocProvider.value(
+                        value: context.read<MultiplierCubit>(),
+                      ),
                     ],
                     child: const SkinsPage(),
                   );
