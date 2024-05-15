@@ -4,6 +4,7 @@ import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
 import 'package:muffin_clicker/upgrades/cubit/upgrade_model.dart';
 import 'package:muffin_clicker/upgrades/cubit/upgrades_cubit.dart';
+import 'package:muffin_clicker/utils/format_number.dart';
 
 class UpgradesBar extends StatelessWidget {
   const UpgradesBar({super.key});
@@ -100,13 +101,13 @@ class _Upgrade extends StatelessWidget {
                     ),
                     Text(
                       upgradeModel.name,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
               ),
               Text(
-                '${upgradeModel.price}',
+                formatNumber(upgradeModel.price),
                 style: TextStyle(
                     color: availableClicks >= upgradeModel.price
                         ? Colors.green

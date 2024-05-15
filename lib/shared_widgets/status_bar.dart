@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_model.dart';
+import 'package:muffin_clicker/utils/format_number.dart';
 
 class StatusBar extends StatelessWidget {
   final Function()? onPressBack;
@@ -32,7 +33,7 @@ class StatusBar extends StatelessWidget {
       fontSize: 13,
       shadows: shadows,
     );
-   
+
     return Column(
       children: [
         Container(
@@ -60,11 +61,12 @@ class StatusBar extends StatelessWidget {
                     builder: (context, state) {
                       return Column(
                         children: [
-                          Text('${state.clicks} muffins', style: titleStyle),
+                          Text('${formatNumber(state.clicks)} muffins',
+                              style: titleStyle),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: Text(
-                                '${state.clicksPerSecond * state.multiplier} muffins per second',
+                                '${formatNumber(state.clicksPerSecond * state.multiplier)} muffins per second',
                                 style: subtitleStyle),
                           ),
                         ],
