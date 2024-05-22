@@ -1,5 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_model.dart';
+import 'package:muffin_clicker/clicker/views/clicker_game.dart';
 import 'package:muffin_clicker/upgrades/cubit/upgrade_model.dart';
 
 class ClickerCubit extends HydratedCubit<ClickerModel> {
@@ -35,6 +36,13 @@ class ClickerCubit extends HydratedCubit<ClickerModel> {
       clicksIncrement:
           state.clicksIncrement * upgrade.clicksIncrementMultiplier,
       clicksPerSecond: state.clicksPerSecond + upgrade.clicksPerSecondIncrement,
+    ));
+  }
+
+  void applyLevelUp(int level) {
+    final newClicks = (state.clicks.toDouble() * (1.0 + level.toDouble() / 100.0)).toInt();
+    emit(state.copyWith(
+      clicks: newClicks,
     ));
   }
 

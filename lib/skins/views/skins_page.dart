@@ -6,6 +6,7 @@ import 'package:muffin_clicker/shared_widgets/status_bar.dart';
 import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
 import 'package:muffin_clicker/skins/cubit/skin_model.dart';
 import 'package:muffin_clicker/skins/cubit/skins_cubit.dart';
+import 'package:muffin_clicker/utils/text_styles.dart';
 
 class SkinsPage extends StatelessWidget {
   const SkinsPage({
@@ -93,6 +94,10 @@ class _SkinCard extends StatelessWidget {
                       return const SizedBox();
                     }
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Lv ${skinModel.level}', style: levelLabelTextStyle,),
                 ),
                 InkWellContainer(
                   color: Colors.transparent,

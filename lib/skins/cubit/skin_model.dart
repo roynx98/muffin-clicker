@@ -8,6 +8,8 @@ class SkinModel {
   final String backgroundId;
   final bool isBought;
   final int price;
+  final int level;
+  final double levelProgress;
 
   const SkinModel({
     required this.name,
@@ -15,15 +17,19 @@ class SkinModel {
     required this.backgroundId,
     required this.isBought,
     required this.price,
+    required this.level,
+    required this.levelProgress,
   });
 
-  SkinModel copyWith({ bool? isBought, }) {
+  SkinModel copyWith({bool? isBought, double? levelProgress, int? level}) {
     return SkinModel(
       name: name,
       image: image,
       backgroundId: backgroundId,
       isBought: isBought ?? this.isBought,
       price: price,
+      level: level ?? this.level,
+      levelProgress: levelProgress ?? this.levelProgress,
     );
   }
 
@@ -34,6 +40,8 @@ class SkinModel {
       backgroundId: json['backgroundId'],
       isBought: json['isBought'],
       price: json['price'],
+      level: json['level'],
+      levelProgress: json['levelProgress'],
     );
   }
   
@@ -44,6 +52,8 @@ class SkinModel {
       'backgroundId': backgroundId,
       'isBought': isBought,
       'price': price,
+      'level': level,
+      'levelProgress': levelProgress,
     };
   }
 }
@@ -59,6 +69,8 @@ const skins = [
     backgroundId: chocolateBackgroundId,
     isBought: true,
     price: 0,
+    level: 0,
+    levelProgress: 0.0
   ),
   SkinModel(
     name: 'Zombie',
@@ -66,6 +78,8 @@ const skins = [
     backgroundId: zombieBackgroundId,
     isBought: false,
     price: 100,
+    level: 0,
+    levelProgress: 0.0
   ),
    SkinModel(
     name: 'Moku',
@@ -73,6 +87,8 @@ const skins = [
     backgroundId: mokuBackgroundId,
     isBought: false,
     price: 10,
+    level: 0,
+    levelProgress: 0.0
   )
 ];
 

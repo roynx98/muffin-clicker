@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 const textShadows = [
   Shadow(
@@ -7,3 +7,10 @@ const textShadows = [
     blurRadius: 2,
   )
 ];
+
+const levelLabelTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+  shadows: textShadows,
+);

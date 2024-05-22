@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 class ParticlesPainter extends CustomPainter {
   List<ClickerParticle> clickerParticles;
   List<ScoreParticle> scoreParticles;
-  int clickIncrement;
   ui.Image? image;
 
   ParticlesPainter({
     required this.clickerParticles,
     required this.scoreParticles,
-    required this.clickIncrement,
     this.image,
   });
 
@@ -40,25 +38,29 @@ class ParticlesPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       );
 
+      final opacity = particle.getOpacity();
+
       final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
         ..pushStyle(ui.TextStyle(
-          color: Colors.white.withOpacity(particle.opacity),
-          fontSize: 25.0,
+          color: particle.color.withOpacity(opacity),
+          fontSize: particle.fontSize,
           shadows: [
             Shadow(
-              color: Colors.black.withOpacity(particle.opacity),
+              color: Colors.black.withOpacity(opacity),
               offset: const Offset(2, 2),
               blurRadius: 2,
             ),
           ],
         ))
-        ..addText('+$clickIncrement');
+        ..addText(particle.val);
 
-      const constraints = ui.ParagraphConstraints(width: 300.0);
+      final constraints = ui.ParagraphConstraints(width: particle.val.length * particle.fontSize);
       final paragraph = paragraphBuilder.build();
       paragraph.layout(constraints);
 
-      canvas.drawParagraph(paragraph, particle.pos);
+      canvas.drawParagraph(paragraph,
+        particle.pos.translate(-paragraph.maxIntrinsicWidth / 2, 0),
+      );
     }
   }
 
@@ -69,20 +71,35 @@ class ParticlesPainter extends CustomPainter {
 }
 
 class ScoreParticle {
+  String val;
   Offset pos;
-  double opacity = 1.0;
+  Color color;
+  double fontSize;
+  double duration;
+  late double ininitalDuration;
   late Offset vel;
 
-  ScoreParticle(this.pos) {
+  ScoreParticle({
+    required this.val,
+    required this.pos,
+    this.color = Colors.white,
+    this.fontSize = 25,
+    this.duration = 1.0,
+  }) {
     vel = const Offset(0, -100);
     var rng = Random();
-    final offset = (-20 * rng.nextDouble() - 10);
+    final offset = (10 + (rng.nextDouble() * -20));
     pos = pos.translate(offset, 0);
+    ininitalDuration = duration;
   }
 
   void update(double delta) {
     pos += vel * delta;
-    opacity -= delta ;
+    duration -= delta;
+  }
+
+  double getOpacity() {
+    return duration / ininitalDuration;
   }
 }
 

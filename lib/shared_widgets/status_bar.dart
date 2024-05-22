@@ -21,13 +21,14 @@ class StatusBar extends StatelessWidget {
         color: Colors.black,
         offset: Offset(2, 2),
         blurRadius: 2,
-      )
+      ),
     ];
     const titleStyle = TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        shadows: shadows);
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      shadows: shadows,
+    );
     const subtitleStyle = TextStyle(
       color: Colors.white,
       fontSize: 13,

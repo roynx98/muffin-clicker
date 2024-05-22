@@ -4,12 +4,14 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/clicker/views/clicker.dart';
 import 'package:muffin_clicker/clicker/views/particles_painter.dart';
 import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
 import 'package:muffin_clicker/skins/cubit/skin_model.dart';
+import 'package:muffin_clicker/skins/cubit/skins_cubit.dart';
 
 class ClickerGame extends StatefulWidget {
   const ClickerGame({super.key});
@@ -25,6 +27,7 @@ class _ClickerGameState extends State<ClickerGame>
   late final Ticker _ticker;
   ui.Image? imageParticle;
   String lastImagePath = '';
+  Offset lastOrigin = const Offset(0, 0);
 
   @override
   void initState() {
@@ -54,8 +57,12 @@ class _ClickerGameState extends State<ClickerGame>
       for (var particle in scoreParticles) {
         particle.update(delta);
       }
-      scoreParticles.removeWhere((particle) => particle.opacity <= 0.0);
+      scoreParticles.removeWhere((particle) => particle.duration <= 0.0);
       lastTick = elapsed;
+
+      final selectedSkinCubit = context.read<SelectedSkinCubit>();
+      final difficulty = -(delta * 5.0) / 60;
+      selectedSkinCubit.addToLevelProgress(difficulty);
 
       setState(() {});
     });
@@ -83,29 +90,53 @@ class _ClickerGameState extends State<ClickerGame>
 
   @override
   Widget build(BuildContext context) {
+    final selectedSkinCubit = context.read<SelectedSkinCubit>();
     final selectedSkin = context.read<SelectedSkinCubit>().state;
     final clickerCubit = context.read<ClickerCubit>();
+    final skinsCubit = context.read<SkinsCubit>();
     final clickIncrement =
         clickerCubit.state.multiplier * clickerCubit.state.clicksIncrement;
 
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: CustomPaint(
-        painter: mapBackgorundIdToPainter[selectedSkin.backgroundId],
-        foregroundPainter: ParticlesPainter(
-          clickerParticles: clickerParticles,
-          scoreParticles: scoreParticles,
-          image: imageParticle,
-          clickIncrement: clickIncrement,
-        ),
-        child: Clicker(
-          onCick: (Offset origin) {
-            clickerParticles.add(ClickerParticle(origin));
-            scoreParticles.add(ScoreParticle(origin));
-            clickerCubit.incrementClicks();
-            playSound();
-          },
+    return BlocListener<SelectedSkinCubit, SkinModel>(
+      listenWhen: (previous, current) {
+        return previous.level != current.level && previous.name == current.name;
+      },
+      listener: (BuildContext context, SkinModel state) {
+         scoreParticles.add(ScoreParticle(
+          val: '!Level Up! +${state.level}%',
+          pos: lastOrigin,
+          color: Colors.white,
+          fontSize: 28,
+          duration: 3,
+        ));
+        clickerCubit.applyLevelUp(state.level);
+
+        skinsCubit.changeLevel(selectedSkin.name, state.level);
+        // Play sound
+      },
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: CustomPaint(
+          painter: mapBackgorundIdToPainter[selectedSkin.backgroundId],
+          foregroundPainter: ParticlesPainter(
+            clickerParticles: clickerParticles,
+            scoreParticles: scoreParticles,
+            image: imageParticle,
+          ),
+          child: Clicker(
+            onCick: (Offset origin) {
+              lastOrigin = origin;
+              clickerParticles.add(ClickerParticle(origin));
+              scoreParticles.add(ScoreParticle(
+                val: '+$clickIncrement',
+                pos: origin,
+              ));
+              clickerCubit.incrementClicks();
+              selectedSkinCubit.gainExperience();
+              playSound();
+            },
+          ),
         ),
       ),
     );

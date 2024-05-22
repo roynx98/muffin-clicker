@@ -13,6 +13,13 @@ class SkinsCubit extends HydratedCubit<List<SkinModel>> {
     emit(newState);
   }
 
+  changeLevel(String name, int level) {
+    final newState = [...state];
+    final updateIndex = newState.indexWhere((skin) => skin.name == name);
+    newState[updateIndex] = newState[updateIndex].copyWith(level: level);
+    emit(newState);
+  }
+
   @override
   List<SkinModel> fromJson(Map<String, dynamic> json) {
       final skins = json['skins'] as List<dynamic>;
