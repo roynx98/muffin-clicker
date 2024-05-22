@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
 import 'package:muffin_clicker/shared_widgets/status_bar.dart';
@@ -8,10 +11,46 @@ import 'package:muffin_clicker/skins/cubit/skin_model.dart';
 import 'package:muffin_clicker/skins/cubit/skins_cubit.dart';
 import 'package:muffin_clicker/utils/text_styles.dart';
 
-class SkinsPage extends StatelessWidget {
+class SkinsPage extends StatefulWidget {
   const SkinsPage({
     super.key,
   });
+
+  @override
+  State<SkinsPage> createState() => _SkinsPageState();
+}
+
+class _SkinsPageState extends State<SkinsPage> {
+  BannerAd? bannerAd;
+  bool isAdLoaded = false;
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/6300978111'
+      : 'ca-app-pub-3940256099942544/2934735716';
+
+  @override
+  void initState() {
+    super.initState();
+    loadAd();
+  }
+
+  void loadAd() {
+    bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          debugPrint('BannerAd failed to load: $error');
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +79,33 @@ class SkinsPage extends StatelessWidget {
                   ),
                 ),
               ),
+              Builder(
+                builder: (context) {
+                  if (bannerAd != null) {
+                    return SafeArea(
+                      child: SizedBox(
+                        width: bannerAd!.size.width.toDouble(),
+                        height: bannerAd!.size.height.toDouble(),
+                        child: AdWidget(ad: bannerAd!),
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
             ],
           );
         },
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bannerAd?.dispose();
+  }
+
 }
 
 class _SkinCard extends StatelessWidget {
@@ -79,25 +139,26 @@ class _SkinCard extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: Builder(
-                    builder: (context) {
-                      if (isSelected) {
-                        return label(text: 'Selected');
-                      }
+                  child: Builder(builder: (context) {
+                    if (isSelected) {
+                      return label(text: 'Selected');
+                    }
 
-                      if (!skinModel.isBought) {
+                    if (!skinModel.isBought) {
                       return label(
                         text: 'Buy for ${skinModel.price}',
                         customTextStyle: canBuy ? textStyle : redTextStyle,
                       );
-                      }
-                      return const SizedBox();
                     }
-                  ),
+                    return const SizedBox();
+                  }),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Lv ${skinModel.level}', style: levelLabelTextStyle,),
+                  child: Text(
+                    'Lv ${skinModel.level}',
+                    style: levelLabelTextStyle,
+                  ),
                 ),
                 InkWellContainer(
                   color: Colors.transparent,
@@ -146,7 +207,8 @@ class _SkinCard extends StatelessWidget {
       child: Container(
         color: Colors.black.withOpacity(0.7),
         width: double.infinity,
-        child: Text(text,
+        child: Text(
+          text,
           textAlign: TextAlign.center,
           style: customTextStyle ?? textStyle,
         ),
