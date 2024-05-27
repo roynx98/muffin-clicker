@@ -26,6 +26,7 @@ class _SkinsButtonState extends State<SkinsButton> with TickerProviderStateMixin
       vsync: this,
       duration: const Duration(milliseconds: 500),
     )..repeat(reverse: true);
+    animationController.stop();
 
     animation = Tween<double>(begin: 0, end: 0.1).animate(animationController);
   }
@@ -96,9 +97,6 @@ class _SkinsButtonState extends State<SkinsButton> with TickerProviderStateMixin
                   ),
                 );
             },
-            // child: Container(
-            //   color: Colors.white
-            // ),
           )
         ],
       ),

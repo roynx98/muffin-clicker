@@ -61,19 +61,22 @@ class SkinModel {
 const chocolateBackgroundId = 'chocolateBackgroundId';
 const zombieBackgroundId = 'zombieBackgroundId';
 const mokuBackgroundId = 'mokuBackgroundId';
+const chocolateSkinName = 'Chocolate';
+const zombieSkinName = 'Zombie';
+const mokuSkinName = 'Moku';
 
 const skins = [
   SkinModel(
-    name: 'Chocolate',
+    name: chocolateSkinName,
+    levelProgress: 0.0,
     image: 'assets/img/chocolate.png',
     backgroundId: chocolateBackgroundId,
     isBought: true,
     price: 0,
     level: 0,
-    levelProgress: 0.0
   ),
   SkinModel(
-    name: 'Zombie',
+    name: zombieSkinName,
     image: 'assets/img/zombie.png',
     backgroundId: zombieBackgroundId,
     isBought: false,
@@ -82,7 +85,7 @@ const skins = [
     levelProgress: 0.0
   ),
    SkinModel(
-    name: 'Moku',
+    name: mokuSkinName,
     image: 'assets/img/moku.png',
     backgroundId: mokuBackgroundId,
     isBought: false,

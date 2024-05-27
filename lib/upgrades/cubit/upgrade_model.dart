@@ -1,3 +1,5 @@
+import 'package:muffin_clicker/skins/cubit/skin_model.dart';
+
 class UpgradeModel {
   final String name;
   final String description;
@@ -7,6 +9,7 @@ class UpgradeModel {
   final String iconName;
   final int clicksIncrementMultiplier;
   final int clicksPerSecondIncrement;
+  final String forSkin;
 
   const UpgradeModel({
     required this.name,
@@ -17,9 +20,10 @@ class UpgradeModel {
     required this.iconName,
     required this.clicksIncrementMultiplier,
     required this.clicksPerSecondIncrement,
+    required this.forSkin,
   });
 
-  UpgradeModel copyWith({ int? level, int? price }) {
+  UpgradeModel copyWith({int? level, int? price}) {
     return UpgradeModel(
       name: name,
       description: description,
@@ -29,6 +33,7 @@ class UpgradeModel {
       iconName: iconName,
       clicksIncrementMultiplier: clicksIncrementMultiplier,
       clicksPerSecondIncrement: clicksPerSecondIncrement,
+      forSkin: forSkin,
     );
   }
 
@@ -42,6 +47,7 @@ class UpgradeModel {
       iconName: json['iconName'],
       clicksIncrementMultiplier: json['clicksIncrementMultiplier'],
       clicksPerSecondIncrement: json['clicksPerSecondIncrement'],
+      forSkin: json['forSkin'],
     );
   }
 
@@ -55,6 +61,7 @@ class UpgradeModel {
       'iconName': iconName,
       'clicksIncrementMultiplier': clicksIncrementMultiplier,
       'clicksPerSecondIncrement': clicksPerSecondIncrement,
+      'forSkin': forSkin,
     };
   }
 }
@@ -68,7 +75,8 @@ const initialUpgrades = [
     priceMultiplier: 10,
     iconName: "assets/img/clicker.png",
     clicksIncrementMultiplier: 2,
-    clicksPerSecondIncrement: 0
+    clicksPerSecondIncrement: 0,
+    forSkin: chocolateSkinName,
   ),
   UpgradeModel(
     name: 'Muffin Stand',
@@ -79,6 +87,7 @@ const initialUpgrades = [
     iconName: "assets/img/stand.png",
     clicksIncrementMultiplier: 1,
     clicksPerSecondIncrement: 1,
+    forSkin: chocolateSkinName,
   ),
   UpgradeModel(
     name: 'Muffin Bakery',
@@ -89,6 +98,7 @@ const initialUpgrades = [
     iconName: "assets/img/bakery.png",
     clicksIncrementMultiplier: 1,
     clicksPerSecondIncrement: 10,
+    forSkin: chocolateSkinName,
   ),
   UpgradeModel(
     name: 'Muffin Factory',
@@ -99,5 +109,17 @@ const initialUpgrades = [
     iconName: "assets/img/factory.png",
     clicksIncrementMultiplier: 1,
     clicksPerSecondIncrement: 100,
+    forSkin: chocolateSkinName,
+  ),
+  UpgradeModel(
+    name: 'Brain Clicker',
+    description: "Makes your clicks 2 times as powerful",
+    level: 1,
+    price: 200,
+    priceMultiplier: 10,
+    iconName: 'assets/img/clicker.png',
+    clicksIncrementMultiplier: 2,
+    clicksPerSecondIncrement: 0,
+    forSkin: zombieSkinName,
   ),
 ];

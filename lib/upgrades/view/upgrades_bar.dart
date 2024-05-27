@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muffin_clicker/clicker/cubit/clicker_cubit.dart';
 import 'package:muffin_clicker/shared_widgets/ink_well_container.dart';
+import 'package:muffin_clicker/skins/cubit/selected_skin_cubit.dart';
+import 'package:muffin_clicker/skins/cubit/skin_model.dart';
 import 'package:muffin_clicker/upgrades/cubit/upgrade_model.dart';
 import 'package:muffin_clicker/upgrades/cubit/upgrades_cubit.dart';
 import 'package:muffin_clicker/utils/format_number.dart';
@@ -13,9 +15,18 @@ class UpgradesBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UpgradesCubit(),
-      child: Builder(
-        builder: (context) {
-          final upgrades = context.watch<UpgradesCubit>().state;
+      child: BlocBuilder<SelectedSkinCubit, SkinModel>(
+        buildWhen: (previous, current) {
+          return previous.name != current.name;
+        },
+        builder: (context, selectedSkin) {
+          final selectedSkinName = selectedSkin.name;
+          final upgrades = context
+              .watch<UpgradesCubit>()
+              .state
+              .where((upgrade) => upgrade.forSkin == selectedSkinName)
+              .toList();
+
           final clicker = context.watch<ClickerCubit>().state;
 
           return SizedBox(

@@ -105,7 +105,6 @@ class _SkinsPageState extends State<SkinsPage> {
     super.dispose();
     bannerAd?.dispose();
   }
-
 }
 
 class _SkinCard extends StatelessWidget {
