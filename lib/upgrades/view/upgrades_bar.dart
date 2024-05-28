@@ -29,26 +29,29 @@ class UpgradesBar extends StatelessWidget {
 
           final clicker = context.watch<ClickerCubit>().state;
 
-          return SizedBox(
-            height: 150,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-              itemCount: upgrades.length,
-              itemBuilder: (context, index) {
-                var padding = const EdgeInsets.all(0);
-
-                if (index == 0) {
-                  padding = const EdgeInsets.only(left: 10);
-                } else if (index == upgrades.length - 1) {
-                  padding = const EdgeInsets.only(right: 10);
-                }
-
-                return Padding(
-                  padding: padding,
-                  child: _Upgrade(upgrades[index], clicker.clicks),
-                );
-              },
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: SizedBox(
+              height: 150,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (context, index) => const SizedBox(width: 10),
+                itemCount: upgrades.length,
+                itemBuilder: (context, index) {
+                  var padding = const EdgeInsets.all(0);
+            
+                  if (index == 0) {
+                    padding = const EdgeInsets.only(left: 10);
+                  } else if (index == upgrades.length - 1) {
+                    padding = const EdgeInsets.only(right: 10);
+                  }
+            
+                  return Padding(
+                    padding: padding,
+                    child: _Upgrade(upgrades[index], clicker.clicks),
+                  );
+                },
+              ),
             ),
           );
         },

@@ -117,7 +117,7 @@ const initialUpgrades = [
     level: 1,
     price: 200,
     priceMultiplier: 10,
-    iconName: 'assets/img/clicker.png',
+    iconName: 'assets/img/brainClicker.png',
     clicksIncrementMultiplier: 2,
     clicksPerSecondIncrement: 0,
     forSkin: zombieSkinName,

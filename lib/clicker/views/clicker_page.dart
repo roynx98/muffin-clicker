@@ -36,7 +36,9 @@ class ClickerPage extends StatelessWidget {
                 ),
                 const _Actions(),
                 const Spacer(),
-                const SafeArea(child: UpgradesBar()),
+                const SafeArea(
+                  child: UpgradesBar(),
+                ),
               ],
             ),
           ],

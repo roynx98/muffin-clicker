@@ -75,6 +75,7 @@ flutter:
     - assets/img/stand.png
     - assets/img/bakery.png
     - assets/img/factory.png
+    - assets/img/brainClicker.png
     - assets/sound/pop.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
